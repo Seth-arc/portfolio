@@ -1,2 +1,2 @@
 # portfolio
-Sethu Nguna's Portfolio Website (2022)
+Sethu Nguna's Portfolio Website (2024)
