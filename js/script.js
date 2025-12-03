@@ -471,9 +471,21 @@ class WebGLBackground {
         this.mouse = { x: 0, y: 0 };
         this.targetMouse = { x: 0, y: 0 };
         
-        this.init();
-        this.addEventListeners();
-        this.animate();
+        // Avoid heavy WebGL on small screens or reduced motion
+        const isSmallScreen = window.matchMedia('(max-width: 768px)').matches;
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        this.enabled = !(isSmallScreen || prefersReduced);
+
+        if (this.enabled) {
+            this.init();
+            this.addEventListeners();
+            this.animate();
+        } else {
+            // Disable canvas interactions to save battery
+            if (this.canvas) {
+                this.canvas.style.display = 'none';
+            }
+        }
     }
     
     init() {
@@ -543,6 +555,7 @@ class WebGLBackground {
     
     addEventListeners() {
         window.addEventListener('resize', () => this.onResize());
+        // Avoid mousemove on touch devices
         window.addEventListener('mousemove', (e) => this.onMouseMove(e));
     }
     
@@ -588,7 +601,7 @@ class LoadingScreen {
     constructor() {
         this.loadingScreen = document.getElementById('loading-screen');
         this.loadingProgress = document.querySelector('.loading-progress');
-            this.hero = document.querySelector('.hero');
+        this.hero = document.querySelector('.hero');
         this.progress = 0;
         
         this.simulateLoading();
@@ -609,10 +622,10 @@ class LoadingScreen {
             
             this.loadingProgress.style.width = `${this.progress}%`;
             
-                    // Start fading in video background at 80%
-                    if (this.progress >= 80 && this.hero) {
-                        this.hero.classList.add('loading-preview');
-                    }
+            // Start fading in video background at 80%
+            if (this.progress >= 80 && this.hero) {
+                this.hero.classList.add('loading-preview');
+            }
         }, 200);
     }
     
@@ -878,7 +891,9 @@ class HeroParallax {
         this.mouse = { x: 0, y: 0 };
         this.target = { x: 0, y: 0 };
 
-        if (this.titleLines.length) {
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const isSmallScreen = window.matchMedia('(max-width: 768px)').matches;
+        if (this.titleLines.length && !(prefersReduced || isSmallScreen)) {
             this.initDepths();
             this.bindEvents();
             this.animate();

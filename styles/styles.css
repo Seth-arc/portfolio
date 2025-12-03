@@ -52,6 +52,16 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
 body.modal-open {
     overflow: hidden;
 }
@@ -224,7 +234,7 @@ body.modal-open {
 
 .hero-title {
     font-family: var(--font-display);
-    font-size: clamp(3rem, 12vw, 10rem);
+    font-size: clamp(2.4rem, 10vw, 8rem);
     font-weight: 300;
     line-height: 1;
     letter-spacing: -0.02em;
@@ -331,7 +341,7 @@ body.modal-open {
 }
 
 .scroll-line {
-    width: 1px;
+    width: 2px;
     height: 60px;
     background: linear-gradient(to bottom, transparent, var(--color-accent), transparent);
     animation: scrollLineMove 2s ease-in-out infinite;
@@ -491,7 +501,7 @@ body.modal-open {
 }
 
 .section-container {
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 var(--spacing-md);
 }
@@ -559,7 +569,7 @@ body.modal-open {
 
 .philosophy-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: var(--spacing-md);
 }
 
@@ -863,7 +873,7 @@ body.modal-open {
 
 .category-projects {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: var(--spacing-md);
 }
 
@@ -1379,6 +1389,18 @@ body.modal-open {
     .category-projects {
         grid-template-columns: 1fr;
     }
+
+    .project-card-inner {
+        padding: var(--spacing-md);
+    }
+
+    .project-title {
+        font-size: 1.25rem;
+    }
+
+    .project-subtitle {
+        font-size: 0.85rem;
+    }
     
     .philosophy-grid {
         grid-template-columns: 1fr;
@@ -1391,8 +1413,8 @@ body.modal-open {
     .modal-close {
         top: var(--spacing-sm);
         right: var(--spacing-sm);
-        width: 40px;
-        height: 40px;
+        width: 44px;
+        height: 44px;
     }
     
     .footer-content {
@@ -1403,14 +1425,7 @@ body.modal-open {
 }
 
 @media (max-width: 480px) {
-    .loading-text {
-        font-size: 1rem;
-        letter-spacing: 0.3rem;
-    }
-    
-    .loading-bar {
-        width: 200px;
-    }
+    .loading-bar { width: 160px; }
     
     .nav-links {
         flex-direction: column;
@@ -1425,6 +1440,38 @@ body.modal-open {
     .modal-section {
         padding-left: var(--spacing-md);
     }
+
+    .contact-btn,
+    .about-link,
+    .modal-link {
+        padding: 0.75rem 1rem;
+        font-size: 0.7rem;
+        letter-spacing: 0.15rem;
+    }
+
+    .hero-title {
+        font-size: clamp(2rem, 12vw, 3.2rem);
+        letter-spacing: -0.01em;
+    }
+}
+
+/* Improve tap targets globally */
+.about-link,
+.contact-btn,
+.modal-link {
+    min-height: 44px;
+}
+
+/* Prevent sticky image on short mobile viewports */
+@media (max-height: 700px) and (max-width: 768px) {
+    .about-visual { position: relative; top: 0; }
+}
+
+/* Reduce blur and overlays for performance on mobile */
+@media (max-width: 768px) {
+    .modal-overlay { backdrop-filter: none; }
+    .hero-video-media { filter: grayscale(0.8); }
+}
 }
 
 /* =====================================================
