@@ -588,6 +588,7 @@ class LoadingScreen {
     constructor() {
         this.loadingScreen = document.getElementById('loading-screen');
         this.loadingProgress = document.querySelector('.loading-progress');
+            this.hero = document.querySelector('.hero');
         this.progress = 0;
         
         this.simulateLoading();
@@ -602,24 +603,30 @@ class LoadingScreen {
                 clearInterval(interval);
                 
                 setTimeout(() => {
-                    this.hide();
-                }, 500);
+                    this.fadeInHero();
+                }, 300);
             }
             
             this.loadingProgress.style.width = `${this.progress}%`;
+            
+                    // Start fading in video background at 80%
+                    if (this.progress >= 80 && this.hero) {
+                        this.hero.classList.add('loading-preview');
+                    }
         }, 200);
     }
     
-    hide() {
+    fadeInHero() {
+        // Hide loading screen
         this.loadingScreen.classList.add('hidden');
         
-        // Trigger hero animation after a short delay
+        // Activate hero with full animation sequence
         setTimeout(() => {
-            const hero = document.querySelector('.hero');
-            if (hero && !hero.classList.contains('active')) {
-                hero.classList.add('active');
+            if (this.hero) {
+                this.hero.classList.remove('loading-preview');
+                this.hero.classList.add('active');
             }
-        }, 300);
+        }, 400);
     }
 }
 

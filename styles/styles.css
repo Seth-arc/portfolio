@@ -140,46 +140,12 @@ body.modal-open {
 
 .loading-content {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: var(--spacing-md);
-}
-
-.loading-text {
-    display: flex;
-    gap: 0.5rem;
-    font-family: var(--font-display);
-    font-size: 1.5rem;
-    font-weight: 300;
-    letter-spacing: 0.5rem;
-}
-
-.loading-letter {
-    opacity: 0;
-    animation: fadeInLetter 0.3s ease-in-out forwards;
-}
-
-.loading-letter:nth-child(1) { animation-delay: 0s; }
-.loading-letter:nth-child(2) { animation-delay: 0.05s; }
-.loading-letter:nth-child(3) { animation-delay: 0.1s; }
-.loading-letter:nth-child(4) { animation-delay: 0.15s; }
-.loading-letter:nth-child(5) { animation-delay: 0.2s; }
-.loading-letter:nth-child(6) { animation-delay: 0.25s; }
-.loading-letter:nth-child(7) { animation-delay: 0.3s; }
-.loading-letter:nth-child(8) { animation-delay: 0.35s; }
-.loading-letter:nth-child(9) { animation-delay: 0.4s; }
-.loading-letter:nth-child(10) { animation-delay: 0.45s; }
-.loading-letter:nth-child(11) { animation-delay: 0.5s; }
-.loading-letter:nth-child(12) { animation-delay: 0.55s; }
-
-@keyframes fadeInLetter {
-    to {
-        opacity: 1;
-    }
+    justify-content: center;
 }
 
 .loading-bar {
-    width: 300px;
+    width: 200px;
     height: 1px;
     background-color: var(--color-border);
     position: relative;
@@ -213,6 +179,22 @@ body.modal-open {
 
 .hero.active {
     opacity: 1;
+}
+
+/* Hero loading preview state */
+.hero.loading-preview {
+    opacity: 0.3;
+    pointer-events: none;
+    transition: opacity 0.6s ease;
+}
+
+.hero.loading-preview .hero-video-overlay {
+    opacity: 0.7;
+}
+
+.hero.loading-preview .hero-content,
+.hero.loading-preview .scroll-indicator {
+    opacity: 0;
 }
 
 .hero-content {
